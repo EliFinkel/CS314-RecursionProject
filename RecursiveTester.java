@@ -34,10 +34,10 @@
         //  doReverseTests();
         //  doNextIsDoubleTests();
         //  doListMnemonicsTests();
-         doCarpetTest();
+        //  doCarpetTest();
         //  doMazeTests();
         //  doFlowOffMapTests();
-        //  doFairTeamsTests();
+         doFairTeamsTests();
     //      studentTests();
      }
  

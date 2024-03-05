@@ -409,19 +409,19 @@ public class Recursive {
 
         int currentMinDiff = Integer.MAX_VALUE;
         for (int i = 0; i < teamScores.length; i++) {
-            // Assign ability to team i
+
             teamScores[i] += abilities[index];
             teamMembers[i]++;
-            // Only increment filledTeams if this is the first member being added to the
-            // team
+        
             int newFilledTeams = filledTeams + (teamMembers[i] == 1 ? 1 : 0);
-            // Recursive call
+
             int diff = minDiffHelper(abilities, index + 1, teamScores, teamMembers, minDiff, newFilledTeams);
-            // Update the minimum difference
+
             currentMinDiff = Math.min(currentMinDiff, diff);
-            // Backtrack: remove ability from team i
+
             teamScores[i] -= abilities[index];
             teamMembers[i]--;
+           
         }
         return currentMinDiff;
 
