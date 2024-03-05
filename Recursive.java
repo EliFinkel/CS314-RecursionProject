@@ -50,8 +50,15 @@ public class Recursive {
                     + "getBinary. n cannot equal "
                     + "Integer.MIN_VALUE. n: " + n);
         }
-        // TODO
-        return ""; // dummy return, replace as necessary
+        if (n == 0) { //first base case: last number's quotient is 0
+            return "0";
+        } else if (n == 1) { //second base case: last number's quotient is 1
+            return "1";
+        } else if (n < 0) { //third base case: last number's quotient is negative
+            return "-" + getBinary(-n);
+        } else {
+            return getBinary(n/2) + Math.abs(n%2);
+        }
     }
 
     /**
@@ -74,7 +81,6 @@ public class Recursive {
             return stringToRev;
         }
 
-   
         // Move the char in the beggining of the stringToRev to the back recursively
         return revString(stringToRev.substring(1)) + stringToRev.charAt(0);
     }
