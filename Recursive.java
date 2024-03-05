@@ -75,6 +75,7 @@ public class Recursive {
         }
 
         // test
+        //test
 
         // Move the char in the beggining of the stringToRev to the back recursively
         return revString(stringToRev.substring(1)) + stringToRev.charAt(0);
