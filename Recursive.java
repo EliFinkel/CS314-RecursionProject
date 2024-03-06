@@ -50,14 +50,14 @@ public class Recursive {
                     + "getBinary. n cannot equal "
                     + "Integer.MIN_VALUE. n: " + n);
         }
-        if (n == 0) { //first base case: last number's quotient is 0
+        if (n == 0) { // first base case: last number's quotient is 0
             return "0";
-        } else if (n == 1) { //second base case: last number's quotient is 1
+        } else if (n == 1) { // second base case: last number's quotient is 1
             return "1";
-        } else if (n < 0) { //third base case: last number's quotient is negative
+        } else if (n < 0) { // third base case: last number's quotient is negative
             return "-" + getBinary(-n);
         } else {
-            return getBinary(n/2) + Math.abs(n%2);
+            return getBinary(n / 2) + Math.abs(n % 2);
         }
     }
 
@@ -419,7 +419,7 @@ public class Recursive {
 
             teamScores[i] += abilities[index];
             teamMembers[i]++;
-        
+
             int newFilledTeams = filledTeams + (teamMembers[i] == 1 ? 1 : 0);
 
             int diff = minDiffHelper(abilities, index + 1, teamScores, teamMembers, minDiff, newFilledTeams);
@@ -428,7 +428,7 @@ public class Recursive {
 
             teamScores[i] -= abilities[index];
             teamMembers[i]--;
-           
+
         }
         return currentMinDiff;
 
@@ -458,7 +458,76 @@ public class Recursive {
      * @return per the post condition
      */
     public static int canEscapeMaze(char[][] rawMaze) {
-        return -1;
-        // TODO
+
+        int coinCount = 0;
+        int startRow = 0;
+        int startCol = 0;
+        for (int row = 0; row < rawMaze.length; row++) {
+            for (int col = 0; col < rawMaze[0].length; col++) {
+                if (rawMaze[row][col] == '$') {
+                    coinCount++;
+                } else if (rawMaze[row][col] == 'S') {
+                    startRow = row;
+                    startCol = col;
+                }
+            }
+        }
+
+        boolean[][] visited = new boolean[rawMaze.length][rawMaze[0].length];
+
+        return canEscapeHelper(rawMaze, startRow, startCol, 0, coinCount, visited);
+    }
+
+    private static int canEscapeHelper(char[][] rawMaze, int row, int col, int coinsCollected, int totalCoins,
+            boolean[][] visited) {
+
+        // failure base
+        if (row < 0 || row >= rawMaze.length || col < 0 || col >= rawMaze[0].length || rawMaze[row][col] == '*'
+                || visited[row][col]) {
+            return -1;
+        }
+
+        char currentVal = rawMaze[row][col];
+        // Success Base case
+        if (currentVal == 'E' && coinsCollected == totalCoins) {
+            return 2;
+        } else if (currentVal == 'E' && coinsCollected != totalCoins) {
+            return 1;
+        }
+        // Recursive step
+        visited[row][col] = true;
+
+        if (currentVal == '$') {
+            coinsCollected++;
+            rawMaze[row][col] = 'Y';
+        } else if (currentVal == 'G' || currentVal == 'S') {
+            rawMaze[row][col] = 'Y';
+        } else if (currentVal == 'Y') {
+            rawMaze[row][col] = '*';
+        }
+
+        int result = 0;
+        int[] rowOffsets = { -1, 1, 0, 0 };
+        int[] colOffsets = { 0, 0, -1, 1 };
+        for (int i = 0; i < 4; i++) {
+            int nextResult = canEscapeHelper(rawMaze, row + rowOffsets[i], col + colOffsets[i], coinsCollected,
+                    totalCoins, visited);
+            if (nextResult == 2) {
+                // Found a path with all coins collected
+                return 2;
+            } else if (nextResult == 1) {
+                // Found a path but not all coins collected
+                result = 1;
+            }
+        }
+        if(currentVal == '$'){
+            rawMaze[row][col] = 'Y';
+        } else {
+            rawMaze[row][col] = currentVal;
+        }
+      
+        visited[row][col] = false;
+
+        return result;
     }
 }

@@ -35,9 +35,9 @@
         //  doNextIsDoubleTests();
         //  doListMnemonicsTests();
         //  doCarpetTest();
-        //  doMazeTests();
+         doMazeTests();
         //  doFlowOffMapTests();
-         doFairTeamsTests();
+        //  doFairTeamsTests();
     //      studentTests();
      }
  
