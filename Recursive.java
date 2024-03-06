@@ -50,11 +50,15 @@ public class Recursive {
                     + "getBinary. n cannot equal "
                     + "Integer.MIN_VALUE. n: " + n);
         }
-        if (n == 0) { // first base case: last number's quotient is 0
+
+        if (n == 0) {
+            // first base case: last number's quotient is 0
             return "0";
-        } else if (n == 1) { // second base case: last number's quotient is 1
+        } else if (n == 1) {
+            // second base case: last number's quotient is 1
             return "1";
-        } else if (n < 0) { // third base case: last number's quotient is negative
+        } else if (n < 0) {
+            // third base case: last number's quotient is negative
             return "-" + getBinary(-n);
         } else {
             return getBinary(n / 2) + Math.abs(n % 2);
@@ -102,6 +106,7 @@ public class Recursive {
             throw new IllegalArgumentException("Failed precondition: "
                     + "revString. parameter may not be null.");
         }
+        // Call recursive helper method
         return checkNextIsDouble(data, 0);
     }
 
@@ -136,7 +141,9 @@ public class Recursive {
                     + "listMnemonics");
         }
 
-        ArrayList<String> results = new ArrayList<>(); // to store the mnemonics
+        // To store the mnemonics
+        ArrayList<String> results = new ArrayList<>();
+        // Call helper method
         recursiveMnemonics(results, "", number);
         return results;
     }
@@ -150,9 +157,14 @@ public class Recursive {
      */
     private static void recursiveMnemonics(ArrayList<String> result, String mnemonicSoFar, String digitsLeft) {
         if (digitsLeft.isEmpty()) {
+            // If no more digits left add mnemonicSoFar
             result.add(mnemonicSoFar);
         } else {
+            // Get the letters from the current digit
             String letters = digitLetters(digitsLeft.charAt(0));
+
+            // Go through each letter and do a recursive call with the letter added to
+            // mnemonicSoFar
             for (int i = 0; i < letters.length(); i++) {
                 recursiveMnemonics(result, mnemonicSoFar + letters.charAt(i), digitsLeft.substring(1));
             }
@@ -251,19 +263,23 @@ public class Recursive {
 
         // Calculate the size of the new squares
         int newSize = size / 3;
+
+        // Cast double values to ints
         int xInt = (int) x;
         int yInt = (int) y;
 
+        // Create a new central rect
         g.fillRect(xInt + newSize, yInt + newSize, newSize, newSize);
 
+        // Loop through each of the 9 other sqaures sourounding the central square
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (!(i == 1 && j == 1)) { // Directly avoid the center square
+            for (int j = 0; j < 3; j++)
+                // Avoid the center square
+                if (!(i == 1 && j == 1)) {
+                    // Draw each new square
                     drawSquares(g, newSize, limit, x + i * newSize, y + j * newSize);
                 }
-            }
         }
-
     }
 
     /**
@@ -294,17 +310,17 @@ public class Recursive {
 
         // Base case to check edges
         if (row == 0 || row == map.length - 1 || col == 0 || col == map[0].length - 1) {
-            return true; // The cell is at the edge of the map.
+            return true;
         }
 
+        // Store val
         int currentVal = map[row][col];
-        boolean canFlow = false; // Flag to check if water can flow off the map.
+        boolean canFlow = false;
 
-        // Temporarily mark the current cell to avoid infinite recursion due to
-        // backtracking
+        // Temporarily mark the current cell to avoid infinite recursion
         map[row][col] = Integer.MAX_VALUE;
 
-        // Check all four directions for a lower value, and recurse if found
+        // Check all four directions for a smaller value, and recurse if found
         if (row < map.length - 1 && map[row + 1][col] < currentVal) {
             if (canFlowOffMap(map, row + 1, col)) {
                 canFlow = true;
@@ -326,7 +342,7 @@ public class Recursive {
             }
         }
 
-        // Set back
+        // Backtrack
         map[row][col] = currentVal;
 
         return canFlow;
@@ -388,8 +404,12 @@ public class Recursive {
      *         ability. The return value will be greater than or equal to 0.
      */
     public static int minDifference(int numTeams, int[] abilities) {
+        // Store each teams total score
         int[] teamScores = new int[numTeams];
+
+        // Store number of members on each team
         int[] teamMembers = new int[numTeams];
+
         // Call the recursive helper method
         return minDiffHelper(abilities, 0, teamScores, teamMembers, Integer.MAX_VALUE, 0);
     }
@@ -397,7 +417,8 @@ public class Recursive {
     public static int minDiffHelper(int[] abilities, int index, int[] teamScores,
             int[] teamMembers, int minDiff, int filledTeams) {
         if (index == abilities.length) {
-            if (filledTeams == teamScores.length) { // Check if all teams have at least one member
+            // Check if all teams have at least one member
+            if (filledTeams == teamScores.length) {
                 int minScore = Integer.MAX_VALUE;
                 int maxScore = Integer.MIN_VALUE;
 
@@ -410,23 +431,28 @@ public class Recursive {
                 // Update minDiff with the smallest difference encountered
                 return Math.min(minDiff, maxScore - minScore);
             } else {
-                // Return maximum value if not all teams have members, indicating invalid setup
+                // Return maximum value if not all teams have members
                 return Integer.MAX_VALUE;
             }
         }
 
+        // Temporarily set currentMinDiff to MAX
         int currentMinDiff = Integer.MAX_VALUE;
-        for (int i = 0; i < teamScores.length; i++) {
 
+        // Loop through each team
+        for (int i = 0; i < teamScores.length; i++) {
             teamScores[i] += abilities[index];
             teamMembers[i]++;
 
             int newFilledTeams = filledTeams + (teamMembers[i] == 1 ? 1 : 0);
 
+            // Recursive call
             int diff = minDiffHelper(abilities, index + 1, teamScores, teamMembers, minDiff, newFilledTeams);
 
+            // Find smallest minDiff
             currentMinDiff = Math.min(currentMinDiff, diff);
 
+            // Backtrack
             teamScores[i] -= abilities[index];
             teamMembers[i]--;
 
@@ -460,11 +486,13 @@ public class Recursive {
      */
     public static int canEscapeMaze(char[][] rawMaze) {
 
+        // Find row and col index of start
         int coinCount = 0;
         int startRow = 0;
         int startCol = 0;
         for (int row = 0; row < rawMaze.length; row++) {
             for (int col = 0; col < rawMaze[0].length; col++) {
+                // Find total number of coins
                 if (rawMaze[row][col] == '$') {
                     coinCount++;
                 } else if (rawMaze[row][col] == 'S') {
@@ -474,11 +502,11 @@ public class Recursive {
             }
         }
 
+        // Call recursive helper method
         return canEscapeHelper(rawMaze, startRow, startCol, 0, coinCount);
     }
 
     private static int canEscapeHelper(char[][] rawMaze, int row, int col, int coinsCollected, int totalCoins) {
-
         // failure base
         if (row < 0 || row >= rawMaze.length || col < 0 || col >= rawMaze[0].length || rawMaze[row][col] == '*') {
             return -1;
@@ -491,6 +519,7 @@ public class Recursive {
         }
         // Recursive step
 
+        // Update char at row and col as we visit it
         if (currentVal == '$') {
             coinsCollected++;
             rawMaze[row][col] = 'Y';
@@ -501,9 +530,13 @@ public class Recursive {
         }
 
         int result = 0;
+        // Offsets to move up down left and right
         int[] rowOffsets = { -1, 1, 0, 0 };
         int[] colOffsets = { 0, 0, -1, 1 };
+
+        // Loop through the four directions
         for (int i = 0; i < 4; i++) {
+            // Recurive call
             int nextResult = canEscapeHelper(rawMaze, row + rowOffsets[i], col + colOffsets[i], coinsCollected,
                     totalCoins);
             if (nextResult == 2) {
@@ -511,6 +544,7 @@ public class Recursive {
                 return 2;
             } else if (nextResult == 1) {
                 // Found a path but not all coins collected
+                // Dont immidetly return in case another path works and collects all coins
                 result = 1;
             }
         }
