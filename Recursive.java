@@ -155,7 +155,8 @@ public class Recursive {
      * digitsLeft are the digits that have not been used
      * from the original number.
      */
-    private static void recursiveMnemonics(ArrayList<String> result, String mnemonicSoFar, String digitsLeft) {
+    private static void recursiveMnemonics(ArrayList<String> result,
+            String mnemonicSoFar, String digitsLeft) {
         if (digitsLeft.isEmpty()) {
             // If no more digits left add mnemonicSoFar
             result.add(mnemonicSoFar);
@@ -166,7 +167,8 @@ public class Recursive {
             // Go through each letter and do a recursive call with the letter added to
             // mnemonicSoFar
             for (int i = 0; i < letters.length(); i++) {
-                recursiveMnemonics(result, mnemonicSoFar + letters.charAt(i), digitsLeft.substring(1));
+                recursiveMnemonics(result, mnemonicSoFar +
+                        letters.charAt(i), digitsLeft.substring(1));
             }
         }
 
@@ -447,7 +449,8 @@ public class Recursive {
             int newFilledTeams = filledTeams + (teamMembers[i] == 1 ? 1 : 0);
 
             // Recursive call
-            int diff = minDiffHelper(abilities, index + 1, teamScores, teamMembers, minDiff, newFilledTeams);
+            int diff = minDiffHelper(abilities, index + 1, teamScores,
+                    teamMembers, minDiff, newFilledTeams);
 
             // Find smallest minDiff
             currentMinDiff = Math.min(currentMinDiff, diff);
@@ -506,9 +509,11 @@ public class Recursive {
         return canEscapeHelper(rawMaze, startRow, startCol, 0, coinCount);
     }
 
-    private static int canEscapeHelper(char[][] rawMaze, int row, int col, int coinsCollected, int totalCoins) {
+    private static int canEscapeHelper(char[][] rawMaze, int row, int col,
+            int coinsCollected, int totalCoins) {
         // failure base
-        if (row < 0 || row >= rawMaze.length || col < 0 || col >= rawMaze[0].length || rawMaze[row][col] == '*') {
+        if (row < 0 || row >= rawMaze.length || col < 0 || col >= rawMaze[0].length ||
+                rawMaze[row][col] == '*') {
             return -1;
         }
 
@@ -537,8 +542,8 @@ public class Recursive {
         // Loop through the four directions
         for (int i = 0; i < 4; i++) {
             // Recurive call
-            int nextResult = canEscapeHelper(rawMaze, row + rowOffsets[i], col + colOffsets[i], coinsCollected,
-                    totalCoins);
+            int nextResult = canEscapeHelper(rawMaze, row + rowOffsets[i], col + colOffsets[i],
+                    coinsCollected, totalCoins);
             if (nextResult == 2) {
                 // Found a path with all coins collected
                 return 2;
