@@ -489,10 +489,8 @@ public class Recursive {
 
         char currentVal = rawMaze[row][col];
         // Success Base case
-        if (currentVal == 'E' && coinsCollected == totalCoins) {
-            return 2;
-        } else if (currentVal == 'E' && coinsCollected != totalCoins) {
-            return 1;
+        if(currentVal == 'E'){
+            return coinsCollected == totalCoins ? 2 : 1;
         }
         // Recursive step
         visited[row][col] = true;
@@ -520,12 +518,9 @@ public class Recursive {
                 result = 1;
             }
         }
-        if(currentVal == '$'){
-            rawMaze[row][col] = 'Y';
-        } else {
-            rawMaze[row][col] = currentVal;
-        }
-      
+
+        rawMaze[row][col] = currentVal;
+
         visited[row][col] = false;
 
         return result;
