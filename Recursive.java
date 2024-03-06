@@ -249,7 +249,8 @@ public class Recursive {
             return; // Base case: if the square is too small, do not draw it
         }
 
-        int newSize = size / 3; // Calculate the size of the new squares
+         // Calculate the size of the new squares
+        int newSize = size / 3;
         int xInt = (int) x;
         int yInt = (int) y;
 
