@@ -249,7 +249,7 @@ public class Recursive {
             return; // Base case: if the square is too small, do not draw it
         }
 
-         // Calculate the size of the new squares
+        // Calculate the size of the new squares
         int newSize = size / 3;
         int xInt = (int) x;
         int yInt = (int) y;
@@ -474,27 +474,22 @@ public class Recursive {
             }
         }
 
-        boolean[][] visited = new boolean[rawMaze.length][rawMaze[0].length];
-
-        return canEscapeHelper(rawMaze, startRow, startCol, 0, coinCount, visited);
+        return canEscapeHelper(rawMaze, startRow, startCol, 0, coinCount);
     }
 
-    private static int canEscapeHelper(char[][] rawMaze, int row, int col, int coinsCollected, int totalCoins,
-            boolean[][] visited) {
+    private static int canEscapeHelper(char[][] rawMaze, int row, int col, int coinsCollected, int totalCoins) {
 
         // failure base
-        if (row < 0 || row >= rawMaze.length || col < 0 || col >= rawMaze[0].length || rawMaze[row][col] == '*'
-                || visited[row][col]) {
+        if (row < 0 || row >= rawMaze.length || col < 0 || col >= rawMaze[0].length || rawMaze[row][col] == '*') {
             return -1;
         }
 
         char currentVal = rawMaze[row][col];
         // Success Base case
-        if(currentVal == 'E'){
+        if (currentVal == 'E') {
             return coinsCollected == totalCoins ? 2 : 1;
         }
         // Recursive step
-        visited[row][col] = true;
 
         if (currentVal == '$') {
             coinsCollected++;
@@ -510,7 +505,7 @@ public class Recursive {
         int[] colOffsets = { 0, 0, -1, 1 };
         for (int i = 0; i < 4; i++) {
             int nextResult = canEscapeHelper(rawMaze, row + rowOffsets[i], col + colOffsets[i], coinsCollected,
-                    totalCoins, visited);
+                    totalCoins);
             if (nextResult == 2) {
                 // Found a path with all coins collected
                 return 2;
@@ -520,9 +515,8 @@ public class Recursive {
             }
         }
 
+        // Backtrack
         rawMaze[row][col] = currentVal;
-
-        visited[row][col] = false;
 
         return result;
     }
