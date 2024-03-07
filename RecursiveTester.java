@@ -35,7 +35,7 @@ public class RecursiveTester {
         // doNextIsDoubleTests();
         // doListMnemonicsTests();
         // doCarpetTest();
-        doMazeTests();
+        // doMazeTests();
         // doFlowOffMapTests();
         // doFairTeamsTests();
         // studentTests();

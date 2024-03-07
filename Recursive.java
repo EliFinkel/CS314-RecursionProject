@@ -315,12 +315,11 @@ public class Recursive {
         }
         // Store val
         int currentVal = map[row][col];
-        boolean canFlow = false;
+        boolean canFlow = checkDirections(map, row, col, currentVal);
 
         // Temporarily mark the current cell to avoid infinite recursion
         map[row][col] = Integer.MAX_VALUE;
         // Check all four directions for a smaller value, and recurse if found
-        canFlow = checkDirections(map, row, col, currentVal, canFlow);
 
         // Backtrack
         map[row][col] = currentVal;
@@ -328,7 +327,22 @@ public class Recursive {
         return canFlow;
     }
 
-    private static boolean checkDirections(int[][] map, int row, int col, int currentVal, boolean canFlow) {
+    /**
+     * Helper method for canFlowOffMap
+     * Checks if can flow off map starting at each position in all four
+     * directions around the current position
+     *
+     * @param map        The height map of the terrain.
+     * @param row        The row index of the current location.
+     * @param col        The column index of the current location.
+     * @param currentVal The height value at the current location.
+     * @param canFlow    boolean if water can flow
+     * @return true if water can flow off the map from the specified location,
+     *         otherwise false.
+     */
+    private static boolean checkDirections(int[][] map, int row, int col, int currentVal) {
+        boolean canFlow = false;
+        // Check above and below
         if (row < map.length - 1 && map[row + 1][col] < currentVal) {
             if (canFlowOffMap(map, row + 1, col)) {
                 canFlow = true;
@@ -339,6 +353,7 @@ public class Recursive {
                 canFlow = true;
             }
         }
+        // Check left and right
         if (col < map[0].length - 1 && map[row][col + 1] < currentVal) {
             if (canFlowOffMap(map, row, col + 1)) {
                 canFlow = true;
@@ -446,6 +461,20 @@ public class Recursive {
 
     }
 
+    /**
+     * Helper method for minDiffHelper()
+     * Recursively distributes abilities across teams to minimize the difference in
+     * their total scores.
+     *
+     * @param abilities   Array of each persons abilities
+     * @param index       Current index in the abilities array
+     * @param teamScores  Array of current total scores for each team
+     * @param teamMembers Array of the number of members in each team
+     * @param minDiff     The minimum difference in team scores found so far
+     * @param filledTeams The number of teams that have been assigned at least one
+     *                    member
+     * @return The minimum difference between team scores that can be achieved.
+     */
     private static int minDiffRecursiveCall(int[] abilities, int index, int[] teamScores, int[] teamMembers,
             int minDiff,
             int filledTeams) {
@@ -517,6 +546,21 @@ public class Recursive {
         return canEscapeHelper(rawMaze, startRow, startCol, 0, coinCount);
     }
 
+    /**
+     * Helper method for canEscapeMaze()
+     * Recursively explores a maze to determine if escape is possible with all coins
+     * collected
+     *
+     * @param rawMaze        The maze represented as a 2D character array
+     * @param row            The current row position in the maze
+     * @param col            The current column position in the maze
+     * @param coinsCollected The number of coins collected so far
+     * @param totalCoins     The total number of coins to collect in the maze
+     * @return Returns 2 if escape is possible with all coins collected or 1 if
+     *         escape
+     *         is possible without collecting
+     *         all coins and -1 if escape is not possible.
+     */
     private static int canEscapeHelper(char[][] rawMaze, int row, int col,
             int coinsCollected, int totalCoins) {
         // failure base
@@ -544,6 +588,19 @@ public class Recursive {
         return result;
     }
 
+    /**
+     * Checks all possible directions from the current position in the maze to find
+     * an escape route.
+     *
+     * @param rawMaze        The maze represented as a 2D character array
+     * @param row            The current row position in the maze
+     * @param col            The current column position in the maze
+     * @param coinsCollected The number of coins collected so far
+     * @param totalCoins     The total number of coins that can be collected
+     * @return Returns 2 if a path to escape with all coins collected is found, 1 if
+     *         a path to escape is found but not all coins are collected,
+     *         and 0 if no escape path is found from the current position.
+     */
     private static int checkDirections(char[][] rawMaze, int row, int col,
             int coinsCollected, int totalCoins) {
         int result = 0;
