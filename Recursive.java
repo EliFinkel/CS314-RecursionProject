@@ -1,16 +1,16 @@
 /*  Student information for assignment:
  *
- *  On <MY|OUR> honor, <NAME1> and <NAME2),
+ *  On <MY|OUR> honor, Eli Finkel and Gabe Aguilar,
  *  this programming assignment is <MY|OUR> own work
  *  and <I|WE> have not provided this code to any other student.
  *
- *  Number of slip days used:
+ *  Number of slip days used: 0
  *
  *  Student 1 (Student whose Canvas account is being used)
- *  UTEID:
- *  email address:
- *  Grader name:
- *  Section number:
+ *  UTEID: egf525
+ *  email address: eligfinkel@utexas.edu
+ *  Grader name: Gracelynn Ray
+ *  Section number: 50815
  *
  *  Student 2
  *  UTEID:
