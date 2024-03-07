@@ -61,6 +61,8 @@ public class Recursive {
             // third base case: last number's quotient is negative
             return "-" + getBinary(-n);
         } else {
+            // divide the number by 2 to get the binary representation and append the
+            // remainder
             return getBinary(n / 2) + Math.abs(n % 2);
         }
     }
@@ -265,11 +267,9 @@ public class Recursive {
 
         // Calculate the size of the new squares
         int newSize = size / 3;
-
         // Cast double values to ints
         int xInt = (int) x;
         int yInt = (int) y;
-
         // Create a new central rect
         g.fillRect(xInt + newSize, yInt + newSize, newSize, newSize);
 
@@ -309,20 +309,26 @@ public class Recursive {
             throw new IllegalArgumentException("Failed precondition: "
                     + "canFlowOffMap");
         }
-
         // Base case to check edges
         if (row == 0 || row == map.length - 1 || col == 0 || col == map[0].length - 1) {
             return true;
         }
-
         // Store val
         int currentVal = map[row][col];
         boolean canFlow = false;
 
         // Temporarily mark the current cell to avoid infinite recursion
         map[row][col] = Integer.MAX_VALUE;
-
         // Check all four directions for a smaller value, and recurse if found
+        canFlow = checkDirections(map, row, col, currentVal, canFlow);
+
+        // Backtrack
+        map[row][col] = currentVal;
+
+        return canFlow;
+    }
+
+    private static boolean checkDirections(int[][] map, int row, int col, int currentVal, boolean canFlow) {
         if (row < map.length - 1 && map[row + 1][col] < currentVal) {
             if (canFlowOffMap(map, row + 1, col)) {
                 canFlow = true;
@@ -343,10 +349,6 @@ public class Recursive {
                 canFlow = true;
             }
         }
-
-        // Backtrack
-        map[row][col] = currentVal;
-
         return canFlow;
     }
 
@@ -418,6 +420,7 @@ public class Recursive {
 
     public static int minDiffHelper(int[] abilities, int index, int[] teamScores,
             int[] teamMembers, int minDiff, int filledTeams) {
+
         if (index == abilities.length) {
             // Check if all teams have at least one member
             if (filledTeams == teamScores.length) {
@@ -438,6 +441,14 @@ public class Recursive {
             }
         }
 
+        int currentMinDiff = minDiffRecursiveCall(abilities, index, teamScores, teamMembers, minDiff, filledTeams);
+        return currentMinDiff;
+
+    }
+
+    private static int minDiffRecursiveCall(int[] abilities, int index, int[] teamScores, int[] teamMembers,
+            int minDiff,
+            int filledTeams) {
         // Temporarily set currentMinDiff to MAX
         int currentMinDiff = Integer.MAX_VALUE;
 
@@ -447,11 +458,9 @@ public class Recursive {
             teamMembers[i]++;
 
             int newFilledTeams = filledTeams + (teamMembers[i] == 1 ? 1 : 0);
-
             // Recursive call
             int diff = minDiffHelper(abilities, index + 1, teamScores,
                     teamMembers, minDiff, newFilledTeams);
-
             // Find smallest minDiff
             currentMinDiff = Math.min(currentMinDiff, diff);
 
@@ -461,7 +470,6 @@ public class Recursive {
 
         }
         return currentMinDiff;
-
     }
 
     /**
@@ -516,14 +524,11 @@ public class Recursive {
                 rawMaze[row][col] == '*') {
             return -1;
         }
-
         char currentVal = rawMaze[row][col];
         // Success Base case
         if (currentVal == 'E') {
             return coinsCollected == totalCoins ? 2 : 1;
         }
-        // Recursive step
-
         // Update char at row and col as we visit it
         if (currentVal == '$') {
             coinsCollected++;
@@ -533,7 +538,14 @@ public class Recursive {
         } else if (currentVal == 'Y') {
             rawMaze[row][col] = '*';
         }
+        int result = checkDirections(rawMaze, row, col, coinsCollected, totalCoins);
+        // Backtrack
+        rawMaze[row][col] = currentVal;
+        return result;
+    }
 
+    private static int checkDirections(char[][] rawMaze, int row, int col,
+            int coinsCollected, int totalCoins) {
         int result = 0;
         // Offsets to move up down left and right
         int[] rowOffsets = { -1, 1, 0, 0 };
@@ -553,10 +565,6 @@ public class Recursive {
                 result = 1;
             }
         }
-
-        // Backtrack
-        rawMaze[row][col] = currentVal;
-
         return result;
     }
 }

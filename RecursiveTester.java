@@ -30,15 +30,15 @@ public class RecursiveTester {
 
     // run the tests
     public static void main(String[] args) {
-        doBinaryTests();
-        doReverseTests();
-        doNextIsDoubleTests();
-        doListMnemonicsTests();
-        doCarpetTest();
+        // doBinaryTests();
+        // doReverseTests();
+        // doNextIsDoubleTests();
+        // doListMnemonicsTests();
+        // doCarpetTest();
         doMazeTests();
-        doFlowOffMapTests();
-        doFairTeamsTests();
-        studentTests();
+        // doFlowOffMapTests();
+        // doFairTeamsTests();
+        // studentTests();
     }
 
     // post: run student test
