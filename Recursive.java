@@ -608,7 +608,6 @@ public class Recursive {
         // Offsets to move up down left and right
         int[] rowOffsets = { -1, 1, 0, 0 };
         int[] colOffsets = { 0, 0, -1, 1 };
-
         final int NUM_DIRECTIONS = 4;
         // Loop through the four directions
         for (int i = 0; i < NUM_DIRECTIONS; i++) {
