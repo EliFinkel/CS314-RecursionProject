@@ -430,7 +430,8 @@ public class Recursive {
         int[] teamMembers = new int[numTeams];
 
         // Call the recursive helper method
-        return minDiffHelper(abilities, 0, teamScores, teamMembers, Integer.MAX_VALUE, 0);
+        return minDiffHelper(abilities, 0, teamScores, teamMembers, 
+                                        Integer.MAX_VALUE, 0);
     }
 
     public static int minDiffHelper(int[] abilities, int index, int[] teamScores,
@@ -456,7 +457,8 @@ public class Recursive {
             }
         }
 
-        int currentMinDiff = minDiffRecursiveCall(abilities, index, teamScores, teamMembers, minDiff, filledTeams);
+        int currentMinDiff = minDiffRecursiveCall(abilities, index, teamScores,
+                                            teamMembers, minDiff, filledTeams);
         return currentMinDiff;
 
     }
@@ -475,9 +477,8 @@ public class Recursive {
      *                    member
      * @return The minimum difference between team scores that can be achieved.
      */
-    private static int minDiffRecursiveCall(int[] abilities, int index, int[] teamScores, int[] teamMembers,
-            int minDiff,
-            int filledTeams) {
+    private static int minDiffRecursiveCall(int[] abilities, int index,
+                            int[] teamScores, int[] teamMembers, int minDiff, int filledTeams) {
         // Temporarily set currentMinDiff to MAX
         int currentMinDiff = Integer.MAX_VALUE;
 
