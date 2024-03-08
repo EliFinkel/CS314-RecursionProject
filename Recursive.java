@@ -609,8 +609,9 @@ public class Recursive {
         int[] rowOffsets = { -1, 1, 0, 0 };
         int[] colOffsets = { 0, 0, -1, 1 };
 
+        final int NUM_DIRECTIONS = 4;
         // Loop through the four directions
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < NUM_DIRECTIONS; i++) {
             // Recurive call
             int nextResult = canEscapeHelper(rawMaze, row + rowOffsets[i], col + colOffsets[i],
                     coinsCollected, totalCoins);
