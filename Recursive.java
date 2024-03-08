@@ -1,8 +1,8 @@
 /*  Student information for assignment:
  *
- *  On <MY|OUR> honor, Eli Finkel and Gabe Aguilar,
- *  this programming assignment is <MY|OUR> own work
- *  and <I|WE> have not provided this code to any other student.
+ *  On our honor, Eli Finkel and Gabe Aguilar,
+ *  this programming assignment is our own work
+ *  and we have not provided this code to any other student.
  *
  *  Number of slip days used: 0
  *
@@ -13,8 +13,8 @@
  *  Section number: 50815
  *
  *  Student 2
- *  UTEID:
- *  email address:
+ *  UTEID: gaa2292
+ *  email address: gaa2292@utexas.edu
  *
  */
 
